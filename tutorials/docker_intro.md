@@ -213,7 +213,7 @@ It has a single `hello.c` file responsible for printing out the message you're s
 
 # Self-check questions
 
-[Enter the interactive self-check page](https://alonitac.github.io/UPES-CSDV3004/multichoice-questions/docker_intro.html)
+[Enter the interactive self-check page](https://alonitac.github.io/UPES-CSDV-3004/multichoice-questions/docker_intro.html)
 
 
 # Exercises
