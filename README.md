@@ -5,7 +5,7 @@
 | Date | Hours (india time) | Topic                                                      |
 | ---- |--------------------|------------------------------------------------------------| 
 | 22\9 | 	10:00-11:00      | [Virtualization and containers](tutorials/docker_intro.md) | 
-| 29\9 | 	10:00-11:00      | [Docker containers](tutorials/docker_intro.md)             | 
+| 29\9 | 	10:00-11:00      | [Docker containers](tutorials/docker_containers.md)        | 
 | 2\10 | 	10:00-11:00      | 	                                                          | 
 | 3\10 | 	10:00-11:00      |                                                            | 
 | 4\10 | 	10:00-11:00      |                                                            | 
