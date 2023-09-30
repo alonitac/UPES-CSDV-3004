@@ -1,6 +1,6 @@
 # Docker Networking
 
-[Docker networking slides](https://alonitac.github.io/DevOpsFeb23/slides/docker_networking.html) 
+[Docker networking slides](https://alonitac.github.io/UPES-CSDV-3004/slides/docker_networking.html) 
 
 ## Docker network sandbox and drivers
 
@@ -98,7 +98,7 @@ To actually publish the port when running the container, use the `-p` flag on do
 
 # Self-check questions
 
-[Enter the interactive self-check page](https://alonitac.github.io/DevOpsFeb23/multi-choice-questions/docker_networking.html)
+[Enter the interactive self-check page](https://alonitac.github.io/UPES-CSDV-3004/multichoice-questions/docker_networking.html)
 
 
 # Exercises

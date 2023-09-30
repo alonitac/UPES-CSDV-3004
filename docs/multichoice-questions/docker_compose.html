@@ -1,0 +1,129 @@
+
+    
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>
+    Docker - Compose - multichoice questions
+    </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" xmlns="http://www.w3.org/1999/html">
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=TextEncoder%2Ccrypto.subtle"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="github-markdown-css.css">
+        <style>
+            .markdown-body {
+                box-sizing: border-box;
+                min-width: 200px;
+                max-width: 980px;
+                margin: 0 auto;
+                padding: 45px;
+            }
+    
+            @media (max-width: 767px) {
+                .markdown-body {
+                    padding: 15px;
+                }
+            }
+            
+            .floating-button {
+              position: fixed;
+              bottom: 20px; /* Adjust the distance from the bottom as needed */
+              right: 20px; /* Adjust the distance from the right as needed */
+              z-index: 9999; /* Ensure the button appears above other elements */
+            }
+        </style>
+        <script>
+            const solutions = {'1': 'af2aef7071ca92fd7c9b80f9eb2263ffacf7d6dae5d0612e1ba4bbc04e04fc47', '2': 'a72baf2ea0bfd03b5d99763aaecd821201b45acb2bbe4e7243cb7c459fae576f'}
+        </script>
+    </head>
+    <body>
+    
+    <article class="markdown-body">  
+    
+    <h1>Docker - Compose - multichoice questions</h1>
+<p>Given the below <code>docker-compose.yaml</code> file:</p>
+<pre><code class="language-yaml">version: &quot;3.9&quot;
+services:
+  app:
+    image: &quot;ubuntu&quot;
+  redis:
+    image: &quot;redis:alpine&quot;
+    expose:
+      - 6379
+</code></pre>
+<p>Answer the below 2 questions.</p>
+<h2>Question 1</h2>
+<p>What is the network used when deploy the two specified services? </p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> The default docker <code>bridge</code> network.</li>
+<li><input type="checkbox"> Compose automatically creates custom network for this project. </li>
+<li><input type="checkbox"> Networking is disabled in this compose project.</li>
+<li><input type="checkbox"> None of the above.</li>
+</ul>
+<h2>Question 2</h2>
+<p>How can the <code>app</code> service access the <code>redis</code> service? </p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> We must have <code>redis</code>'s IP address.</li>
+<li><input type="checkbox"> By <code>redis:6379</code>.</li>
+<li><input type="checkbox"> By <code>services.redis:6379</code></li>
+<li><input type="checkbox"> The <code>redis</code> service is not accessible from the <code>app</code> service. </li>
+</ul> 
+    
+        <script>
+    
+            function test(){
+                const studentSolution = {};
+    
+                $('ul').each(function (index) {
+                    if ($(this).find('input[type="checkbox"]').length > 0) {
+                      var ulElement = $(this);
+                      var qNum = ($('ul').index(ulElement) + 1) + '';
+
+                      var answerToken = '' + qNum;
+                      ulElement.find('li').each(function () {
+                        var isChecked = $(this).find('input').prop('checked');
+                        answerToken += isChecked ? '1' : '0';
+
+                      });
+
+                      var hashPromise  = crypto.subtle.digest('SHA-256', new TextEncoder().encode(answerToken))
+                        .then((hashBuffer) => {
+                          var hashArray = Array.from(new Uint8Array(hashBuffer));
+                          var hashHex = hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
+                          return hashHex;
+                        });
+    
+                      studentSolution[qNum] = hashPromise;
+    
+                    }
+                });
+    
+                Promise.allSettled(Object.values(studentSolution))
+                  .then(function (results) {
+                    results.forEach(function (result, i) {
+                       studentSolution[(i + 1) + ''] = result.value;
+                    });
+                }).then(function () {
+
+                    console.log(studentSolution)
+
+                    for (const i in studentSolution) {
+                      console.log('student solution' + studentSolution[i]);
+                      if (solutions[i] === studentSolution[i]) {
+                        $("h2:contains('Question " + i + "'):first").css('color', 'green');
+                      } else {
+                        $("h2:contains('Question " + i + "'):first").css('color', 'red');
+                      }
+                    }
+                });
+            }
+    
+        </script>
+    
+        <input type="button" class="floating-button" value="Test" onclick="test()">
+    
+    </article>
+    </body>
+    </html>
+    
+    

@@ -170,7 +170,7 @@ An easy way to visualize the difference among volumes, bind mounts, and tmpfs mo
 
 # Self-check questions
 
-[Enter the interactive self-check page](https://alonitac.github.io/DevOpsFeb23/multi-choice-questions/docker_volumes.html)
+[Enter the interactive self-check page](https://alonitac.github.io/UPES-CSDV-3004/multichoice-questions/docker_volumes.html)
 
 # Exercises
 
@@ -224,9 +224,7 @@ Here is general guidelines:
   3. Verify that the data was successfully survived container kill, by: `db.myCollection.find()`.
   4. You should see the inserted data.
 
-## Optional practice
-
-### Investigate volume mounting
+### :pencil2: Investigate volume mounting
 
 Use the `ubuntu` container to experiment with volume mounting and answer the following questions:
 

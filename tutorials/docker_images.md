@@ -372,13 +372,9 @@ By using multi-stage builds, we can take advantage of the build stage to compile
 
 # Self-check questions
 
-[Enter the interactive self-check page](https://alonitac.github.io/DevOpsFeb23/multi-choice-questions/docker_images.html)
+[Enter the interactive self-check page](https://alonitac.github.io/UPES-CSDV-3004/multichoice-questions/docker_images.html)
 
 # Exercises
-
-### 
-
-Containerize the availability agents from previous step 
 
 ### :pencil2: Push to DockerHub
 
@@ -420,7 +416,7 @@ How many issues were found in total? How critical, high, medium, low?
 Follow the **Recommendations for base image upgrade:** section in Snyk's report to build another version of `my_flask_app` image with another base image to mitigate critical and high vulnerabilities.
 
 
-### Build the 2048 game
+### :pencil2: Build the 2048 game
 
 The 2048 game source code is available in this git repo: https://github.com/gabrielecirulli/2048
 
@@ -431,7 +427,7 @@ Run a container from the newly built image, and make sure you can play the game:
 docker run -p 8080:80 my-2048-game
 ```
 
-### Parametrized build
+### :pencil2: Parametrized build
 
 The [ARG instruction](https://docs.docker.com/engine/reference/builder/#arg) in Dockerfile allows you to define variables that users can pass at build-time to customize the build process.
 These variables can be used during the build to define defaults, or pass values into the image at build-time.

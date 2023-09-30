@@ -76,7 +76,7 @@ https://docs.docker.com/compose/gettingstarted/
 
 # Self-check questions
 
-[Enter the interactive self-check page](https://alonitac.github.io/DevOpsFeb23/multi-choice-questions/docker_compose.html)
+[Enter the interactive self-check page](https://alonitac.github.io/UPES-CSDV-3004/multichoice-questions/docker_compose.html)
 
 
 # Exercises
