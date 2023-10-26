@@ -15,12 +15,12 @@
 | 20\10     | 	10:00-11:00       | [Docker networking](tutorials/docker_networking.md)        | 
 | 27\10     | 	10:00-11:00       | [Docker volumes](tutorials/docker_volumes.md)              | 
 | 3\11      | 	10:00-11:00       | Docker Compose                                             | 
-| 10\11     | 	10:00-11:00       | Intro to Microservices, Intro to Kubernetes                | 
-| 17\11     | 	10:00-11:00       | Intro to Kubernetes                                        | 
-| 24\11     | 	10:00-11:00       | Intro to Kubernetes                                        | 
-| 1\12      | 	10:00-11:00       | K8S core objects                                           | 
-| 8\12      | 	10:00-11:00       | K8S core objects                                           | 
-| ?         | 	10:00-11:00       | K8S core objects                                           | 
-| ?         | 	10:00-11:00       | HELM                                                       | 
-| ?         | 	10:00-11:00       | HELM                                                       |
-| ?         | 	10:00-11:00       | EKS, Ingress                                               | 
+| 6\11      | 	10:00-11:00       | Intro to Microservices, Intro to Kubernetes                | 
+| 10\11     | 	10:00-11:00       | Intro to Kubernetes                                        | 
+| 13\11     | 	10:00-11:00       | Intro to Kubernetes                                        | 
+| 17\11     | 	10:00-11:00       | K8S core objects                                           | 
+| 20\11     | 	10:00-11:00       | K8S core objects                                           | 
+| 24\11     | 	10:00-11:00       | K8S core objects                                           | 
+| 27\11     | 	10:00-11:00       | HELM                                                       | 
+| 1\12      | 	10:00-11:00       | HELM                                                       |
+| 8\12      | 	10:00-11:00       | EKS, Ingress                                               | 
