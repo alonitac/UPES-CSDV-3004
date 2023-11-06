@@ -14,7 +14,7 @@
 | ~~13\10~~ | 	~~10:00-11:00~~   | Cancelled due to an exam                                   | 
 | 20\10     | 	10:00-11:00       | [Docker networking](tutorials/docker_networking.md)        | 
 | 27\10     | 	10:00-11:00       | [Docker volumes](tutorials/docker_volumes.md)              | 
-| 3\11      | 	10:00-11:00       | Docker Compose                                             | 
+| 3\11      | 	10:00-11:00       | [Docker Compose](tutorials/docker_compose.md)              | 
 | 6\11      | 	10:00-11:00       | Intro to Microservices, Intro to Kubernetes                | 
 | 10\11     | 	10:00-11:00       | Intro to Kubernetes                                        | 
 | 13\11     | 	10:00-11:00       | Intro to Kubernetes                                        | 
