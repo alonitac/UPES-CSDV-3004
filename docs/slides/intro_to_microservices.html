@@ -1,0 +1,369 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Introduction to Microservices</title>
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+<link rel="stylesheet" href="dist/theme/white.css" id="theme">
+		<!-- Theme used for syntax highlighted code -->
+<link rel="stylesheet" href="plugin/highlight/zenburn.min.css" id="highlight-theme"></head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+<section data-markdown  ><textarea data-template>
+[comment]: # (mdslides presentation.md --include media)
+
+[comment]: # (The list of themes is at https://revealjs.com/themes/)
+[comment]: # (The list of code themes is at https://highlightjs.org/)
+
+[comment]: # (markdown: { smartypants: true })
+
+
+<style type="text/css">
+  .reveal { 
+    font-size: 2.2em;
+  }
+
+  .reveal .code-wrapper code {
+    white-space: pre;
+    font-size: 2em;
+    line-height: 1.2em;
+  }
+</style>
+
+UPES-CSDV-3004
+
+# Introduction to Microservices
+
+By Alon Itach
+
+<img src="media/netflix-microservices.png">
+
+Resources by: martinfowler.com
+
+
+</textarea></section>
+<section data-markdown  ><textarea data-template>
+
+### Today's agenda
+
+- What exactly are they!?
+- What do people really mean when they talk about microservices? 
+- When should we consider using these techniques?
+- Is it “new”? or not.. 
+- Microservice characteristics
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## The basic idea
+
+
+![](media/microservices1.png)
+
+In short, the microservice architectural style is an approach to developing a single application as a **suite of small services**
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## The basic idea
+
+
+![](media/microservices1.png)
+
+Each microservice running in **its own process** and communicating with lightweight mechanisms, often an HTTP resource API.
+
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## The basic idea
+
+
+![](media/microservices1.png)
+
+These services are built around **business capabilities** and **independently deployable** by **fully automated** deployment machinery
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## The basic idea
+
+
+![](media/microservices1.png)
+
+There is a **minimum of centralized management** of these services
+
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## The basic idea
+
+
+![](media/microservices1.png)
+
+Services may be written in different programming languages and use different data storage technologies.
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## A monolithic application
+
+A monolith application is a type of software where all components and functionalities are tightly integrated into a single codebase and deployed as a single unit.
+
+![](media/microservices2.png)
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## A monolithic application
+
+The problems:
+
+- A change made to a small part of the application, requires the entire monolith to be rebuilt and deployed.
+- Overtime it's often hard to keep a good modular structure.
+- Scaling requires scaling of the entire application rather than parts of it that require greater resource
+- [How to break a monolith into microservices](https://martinfowler.com/articles/break-monolith-into-microservices.html)
+
+![](media/microservices2.png)
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## A monolithic application
+
+The benefits: 
+
+- Monolith can sometimes make deployment simpler.
+
+![](media/microservices2.png)
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Microservices: ~~The definition~~  Common characteristics
+
+- Componentization via Services
+- Organized around Business Capabilities
+- Products not Projects
+- Decentralized Governance
+- Decentralized Data Management
+- Infrastructure Automation
+- Design for failure
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Microservices: Common characteristics
+
+- **Componentization via Services**
+- Organized around Business Capabilities
+- Products not Projects
+- Decentralized Governance
+- Decentralized Data Management
+- Infrastructure Automation
+- Design for failure
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Componentization via Services
+
+- Component is a unit of software that is independently replaceable and upgradeable.
+- In microservices, the primary way of componentizing a software is by breaking down into services.
+- Components communicate with a mechanism such as a web service request
+- Componentizing a software into services enforce more explicit interface between components.
+
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Microservices: Common characteristics
+
+- Componentization via Services
+- **Organized around Business Capabilities**
+- Products not Projects
+- Decentralized Governance
+- Decentralized Data Management
+- Infrastructure Automation
+- Design for failure
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Organized around Business Capabilities
+
+- Organizations tends to organize themselves around technology -  UI teams, server-side logic teams, and database teams.
+- That way, even simple changes can lead to a cross-team project taking many time and expensive budget.
+
+![](media/microservices3.png)
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Organized around Business Capabilities
+
+- The microservice approach splitting up into services organized around business capability.
+- Business-capability centric teams are “think-it, build-it and run-it, maintain-it” teams.
+- Consequently, the teams are cross-functional, including the full range of skills required for the development: user-experience, database, and project management. 
+- Do not hand over to other teams for testing, deploying or supporting what they build.
+
+![](media/microservices4.png)
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Microservices: Common characteristics
+
+- Componentization via Services
+- Organized around Business Capabilities
+- **Products not Projects**
+- Decentralized Governance
+- Decentralized Data Management
+- Infrastructure Automation
+- Design for failure
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Products not Projects
+
+- In projects, the aim is to deliver some piece of software which is then considered to be completed. 
+- On completion the software is handed over to a maintenance organization and the project team that built it is disbanded.
+- Microservice preferring instead the notion that a team should **own a product over its full lifetime**.
+- The development team takes full responsibility for the software in production.
+- There's no reason why this same approach can't be taken with monolithic applications, but the smaller granularity of services can make it easier to create the personal relationships between service developers and their users.
+
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Microservicesd: Common characteristics
+
+- Componentization via Services
+- Organized around Business Capabilities
+- Products not Projects
+- **Decentralized Governance**
+- Decentralized Data Management
+- Infrastructure Automation
+- Design for failure
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Decentralized Governance
+
+- Centralised governance has the tendency to standardise on single technology - single programing language, single DB platform, etc...
+- Splitting the monolith's components out into services we have a full choice when building each of them. 
+- You want to use Node.js to standup a simple reports page? Go for it. C++ for a particularly gnarly near-real-time component? Fine.
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Microservicesd: Common characteristics
+
+- Componentization via Services
+- Organized around Business Capabilities
+- Products not Projects
+- Decentralized Governance
+- **Decentralized Data Management**
+- Infrastructure Automation
+- Design for failure
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Decentralized Data Management
+
+- Monolithic applications prefer a single logical database for persistant data.
+- Data modeling in a centralized world can lead to conflicts. Sales view of a customer data will differ from the support view of the same data.
+- Microservices prefer letting each service manage its own database, either different instances of the same database technology, or entirely different database systems. 
+- This decentralized approach can lead to eventual consistency and synchronization problems.
+
+![](media/microservices5.png)
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Microservicesd: Common characteristics
+
+- Componentization via Services
+- Organized around Business Capabilities
+- Products not Projects
+- Decentralized Governance
+- Decentralized Data Management
+- **Infrastructure Automation**
+- Design for failure
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Infrastructure Automation
+
+- Microservices are built and deployed by Continuous Integration and Continuous Delivery (CI/CD) techniques.
+- Services are fully built, tested and deployed. The delivery process can be done as frequent as many times a **day**. 
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Microservicesd: Common characteristics
+
+- Componentization via Services
+- Organized around Business Capabilities
+- Products not Projects
+- Decentralized Governance
+- Decentralized Data Management
+- Infrastructure Automation
+- **Design for failure**
+
+</textarea></section>
+<section data-markdown  data-auto-animate><textarea data-template>
+
+## Design for failure
+
+- Applications need to be designed so that they can tolerate the failure of services.
+- You **must** assume that any service call could fail due to unavailability of the supplier, the client has to respond to this as gracefully as possible. 
+- Netflix's [Chaos Monkey](https://github.com/Netflix/chaosmonkey) induces failures of services and even datacenters during the working day to test both the application's resilience and monitoring.
+- Microservice applications put a lot of emphasis on real-time monitoring of the application, checking both architectural elements (how many requests per second is the database getting) and business relevant metrics (such as how many orders per minute are received).
+
+![](media/microservices6.png)
+
+
+</textarea></section>
+<section data-markdown  data-background-color="aquamarine"><textarea data-template>
+
+# Thanks
+
+</textarea></section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+Reveal.initialize({
+controls : false,
+markdown : {smartypants: true},
+controls : true,
+keyboard : true,
+hash : false,
+respondToHashChanges : false,
+width : 1500,
+height : 1000,
+				hash: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+			});
+		</script>
+	</body>
+</html>
