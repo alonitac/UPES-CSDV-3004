@@ -1,0 +1,271 @@
+
+    
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>
+    Kubernetes - Cluster setup and introduction - multichoice questions
+    </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" xmlns="http://www.w3.org/1999/html">
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=TextEncoder%2Ccrypto.subtle"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="github-markdown-css.css">
+        <style>
+            .markdown-body {
+                box-sizing: border-box;
+                min-width: 200px;
+                max-width: 980px;
+                margin: 0 auto;
+                padding: 45px;
+            }
+    
+            @media (max-width: 767px) {
+                .markdown-body {
+                    padding: 15px;
+                }
+            }
+            
+            .floating-button {
+              position: fixed;
+              bottom: 20px; /* Adjust the distance from the bottom as needed */
+              right: 20px; /* Adjust the distance from the right as needed */
+              z-index: 9999; /* Ensure the button appears above other elements */
+            }
+        </style>
+        <script>
+            const solutions = {'1': '25f0d9bd686d3b5c80d5ab7119f9a9dcedccb13195042e3b632278029a0343f6', '2': 'a72baf2ea0bfd03b5d99763aaecd821201b45acb2bbe4e7243cb7c459fae576f', '3': 'dee0e46ee9d67151bdf0e8b4fc1b33070c9713fe3299ea46be32e4bcc997ed6b', '4': '2e1c2b5c8ae947e7ccb74ca0f7687b0978d490aac9c05774e4bb031e77738f16', '5': '8e99960adea594f6a182af856afa579d41f4230ab3e13a07e379ed359710cbe0', '6': 'f1ede85063de36b37686b6a5c9b998529aa2e850578229c284e68956c7d1ba8f', '7': '6769ec34af2b2717b2a3804057b3d58a163e4696973c4ad10e193e86cd5a4759', '8': 'be011a0b221d45c5dcf3162f0488e74c0024a2c48a5646b1b22cd44a2c0dead5', '9': '1031fd130f899c43c4761c52de1e597b7f01fea3063cb3988592c9fcc5057bb7', '10': '9273c499a75ff31fcd1444f6b1bac768ab93ed86475a4202c7ad5466363f0cfe', '11': '5ce712e12851d31a4f316c59608f98e284c0a9ba07fcd6b6f0087a68540c4c9c', '12': '15f5e92756d7bd73bd92fb0596b848b616687e5a114718faadf44e84ad15f951', '13': 'f0a54be9ab778391c4a67e01c253b252e28646c9960cb00ba4da8e68c3b672b4'}
+        </script>
+    </head>
+    <body>
+    
+    <article class="markdown-body">  
+    
+    <h1>Kubernetes - Cluster setup and introduction - multichoice questions</h1>
+<h2>Question 1</h2>
+<p>What are possible options to provide the <code>my-configs.yaml</code> kubeconfig to <code>kubectl</code> command?</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> using <code>KUBECONFIG=my-configs.yaml</code> environment variable.</li>
+<li><input type="checkbox"> using <code>--kubeconfig my-configs.yaml</code> flag in the <code>kubectl</code>.</li>
+<li><input type="checkbox"> Placing the <code>my-configs.yaml</code> file into <code>~/kubeconfig</code> directory.</li>
+<li><input type="checkbox"> Placing the <code>my-configs.yaml</code> file into <code>~/kube/config</code> directory. </li>
+</ul>
+<h2>Question 2</h2>
+<p>Below are two example kubeconfig YAML files:</p>
+<pre><code class="language-yaml"># kubeconfig1.yaml
+apiVersion: v1
+kind: Config
+
+clusters:
+- name: cluster1
+  cluster:
+    server: https://cluster1.example.com
+    certificate-authority-data: &lt;base64-encoded-ca-cert&gt;
+
+users:
+- name: user1
+  user:
+    client-certificate-data: &lt;base64-encoded-client-cert&gt;
+    client-key-data: &lt;base64-encoded-client-key&gt;
+
+contexts:
+- name: overlapping-context
+  context:
+    cluster: cluster1
+    user: user1
+    namespace: namespace1
+</code></pre>
+<p>And </p>
+<pre><code class="language-yaml"># kubeconfig2.yaml
+
+apiVersion: v1
+kind: Config
+
+clusters:
+- name: cluster2
+  cluster:
+    server: https://cluster2.example.com
+    certificate-authority-data: &lt;base64-encoded-ca-cert&gt;
+
+users:
+- name: user2
+  user:
+    client-certificate-data: &lt;base64-encoded-client-cert&gt;
+    client-key-data: &lt;base64-encoded-client-key&gt;
+
+contexts:
+- name: overlapping-context
+  context:
+    cluster: cluster2
+    user: user2
+    namespace: namespace2
+</code></pre>
+<p>Now, let's set the KUBECONFIG environment variable to include both kubeconfigs:</p>
+<pre><code class="language-bash">export KUBECONFIG=kubeconfig1.yaml:kubeconfig2.yaml
+</code></pre>
+<p>Given the below commands:</p>
+<pre><code class="language-bash">kubectl config set-context overlapping-context
+kubectl run nginx --image=nginx --restart=Never
+</code></pre>
+<p>In which namespace the nginx would be created?</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> <code>default</code></li>
+<li><input type="checkbox"> <code>namespace2</code></li>
+<li><input type="checkbox"> <code>namespace1</code></li>
+<li><input type="checkbox"> Can not be determined.</li>
+</ul>
+<h2>Question 3</h2>
+<p>How many Pods are running in the <code>kube-system</code> namespace on a fresh installation of Kubernetes version <code>1.25.8</code> using Minikube?</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> 0</li>
+<li><input type="checkbox"> 7</li>
+<li><input type="checkbox"> 5</li>
+<li><input type="checkbox"> 4 </li>
+</ul>
+<h2>Question 4</h2>
+<p>Which of the following components are part of the Control Plane?</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> API Server</li>
+<li><input type="checkbox"> kubelet</li>
+<li><input type="checkbox"> Node</li>
+<li><input type="checkbox"> kube-proxy</li>
+<li><input type="checkbox"> scheduler</li>
+<li><input type="checkbox"> etcd</li>
+</ul>
+<h2>Question 5</h2>
+<p>In the kubeconfig file, what does the <code>server: URL</code> point to? Choose the accurate answer</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> The URL address of the cluster.</li>
+<li><input type="checkbox"> The URL address of the API server.</li>
+<li><input type="checkbox"> The URL address of one of the cluster nodes.</li>
+<li><input type="checkbox"> The URL address of the control plane machine.</li>
+</ul>
+<h2>Question 6</h2>
+<p>Choose the correct sentence</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> The API server is a component running as a Linux service on the control-plane machine</li>
+<li><input type="checkbox"> The API server itself is running as a Pod in the cluster, on the control-plane node.</li>
+<li><input type="checkbox"> The API server is running in the cluster control-plane node, but not as a Pod.</li>
+<li><input type="checkbox"> None of the above.</li>
+</ul>
+<h2>Question 7</h2>
+<p>What namespace does <code>kube-scheduler</code> Pod reside in?</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> <code>default</code></li>
+<li><input type="checkbox"> <code>minikube</code></li>
+<li><input type="checkbox"> <code>kube-system</code></li>
+<li><input type="checkbox"> <code>kubernetes-dashboard</code></li>
+</ul>
+<h2>Question 8</h2>
+<p>In a case where the Kubernetes control plane node is unavailable, would that impact containers running on the worker nodes?</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> Worker node would stop functioning, as so containers. </li>
+<li><input type="checkbox"> Containers will keep running, but communicating with the API server and cluster orchestration would work.</li>
+<li><input type="checkbox"> containers will keep running, one of the worker nodes would be the master now.</li>
+<li><input type="checkbox"> None of the above. </li>
+</ul>
+<h2>Question 9</h2>
+<p>Assume 15 Kubernetes cluster running in different regions in AWS. You want to run a <code>kubectl</code> command, but before, you want to make sure your command will be executed on the right cluster. 
+How can you ensure that? </p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> <code>kubectl get context</code></li>
+<li><input type="checkbox"> <code>kubectl config current-context</code></li>
+<li><input type="checkbox"> <code>kubectl config get-context</code></li>
+<li><input type="checkbox"> <code>minikube status</code></li>
+</ul>
+<h2>Question 10</h2>
+<p><code>ssh</code>ing into one of the cluster worker nodes, and executing the <code>docker ps</code> command would print all running containers on that node. </p>
+<p>Here is an example of a container name: </p>
+<pre><code class="language-text">k8s_POD_currencyservice-79b446569d-n6mtq_default_660fbffb-df77-422d-a408-8bc73e5a77d5_0
+</code></pre>
+<p>What information can we extract from the container name?</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> The ports the container is listening to.</li>
+<li><input type="checkbox"> The namespace in which the pod belongs.</li>
+<li><input type="checkbox"> The image name of this running container.</li>
+<li><input type="checkbox"> This container is a pod in a k8s cluster.</li>
+</ul>
+<h2>Question 11</h2>
+<p>A k8s developer wanted to review all existed pods in the cluster. She performed:</p>
+<pre><code class="language-bash">kubectl get pods
+</code></pre>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> The command is good.</li>
+<li><input type="checkbox"> Adding the <code>-n kube-system</code> flag will list all pods.</li>
+<li><input type="checkbox"> The command lists only some of the pods in the cluster.</li>
+<li><input type="checkbox"> None of the above. </li>
+</ul>
+<h2>Question 12</h2>
+<p>In a Kubernetes kubeconfig file, the <code>certificate-authority</code> field, under <code>cluster</code>, is used for:</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> Certificate authority (CA) file that the Kubernetes API server should use to verify the authenticity of the client (<code>kubectl</code>).</li>
+<li><input type="checkbox"> Certificate authority (CA) file that the Kubernetes client (<code>kubectl</code>) should use to sign the Kubernetes API server certificate.</li>
+<li><input type="checkbox"> Certificate authority (CA) file that the Kubernetes API server should use to sign the authenticity of the client (<code>kubectl</code>).</li>
+<li><input type="checkbox"> Certificate authority (CA) file that the Kubernetes client (<code>kubectl</code>) should use to verify the authenticity of the Kubernetes API server.</li>
+</ul>
+<h2>Question 13</h2>
+<p>In a Kubernetes kubeconfig file, the <code>client-certificate</code> and the <code>client-key</code> fields, under <code>user</code>, is used to:</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> Specify the API server certificate and private key that the Kubernetes uses to authenticate itself to the client (<code>kubectl</code>).</li>
+<li><input type="checkbox"> Specify the client certificate and private key that the Kubernetes client (<code>kubectl</code>) uses to authenticate itself to the Kubernetes API server when making requests.</li>
+<li><input type="checkbox"> Specify the client certificate and private key that the Kubernetes client (<code>kubectl</code>) uses to authenticate itself to Minikube.</li>
+<li><input type="checkbox"> None of the above. </li>
+</ul> 
+    
+        <script>
+    
+            function test(){
+                const studentSolution = {};
+    
+                $('ul').each(function (index) {
+                    if ($(this).find('input[type="checkbox"]').length > 0) {
+                      var ulElement = $(this);
+                      var qNum = ($('ul').index(ulElement) + 1) + '';
+
+                      var answerToken = '' + qNum;
+                      ulElement.find('li').each(function () {
+                        var isChecked = $(this).find('input').prop('checked');
+                        answerToken += isChecked ? '1' : '0';
+
+                      });
+
+                      var hashPromise  = crypto.subtle.digest('SHA-256', new TextEncoder().encode(answerToken))
+                        .then((hashBuffer) => {
+                          var hashArray = Array.from(new Uint8Array(hashBuffer));
+                          var hashHex = hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
+                          return hashHex;
+                        });
+    
+                      studentSolution[qNum] = hashPromise;
+    
+                    }
+                });
+    
+                Promise.allSettled(Object.values(studentSolution))
+                  .then(function (results) {
+                    results.forEach(function (result, i) {
+                       studentSolution[(i + 1) + ''] = result.value;
+                    });
+                }).then(function () {
+
+                    console.log(studentSolution)
+
+                    for (const i in studentSolution) {
+                      console.log('student solution' + studentSolution[i]);
+                      if (solutions[i] === studentSolution[i]) {
+                        $("h2:contains('Question " + i + "'):first").css('color', 'green');
+                      } else {
+                        $("h2:contains('Question " + i + "'):first").css('color', 'red');
+                      }
+                    }
+                });
+            }
+    
+        </script>
+    
+        <input type="button" class="floating-button" value="Test" onclick="test()">
+    
+    </article>
+    </body>
+    </html>
+    
+    

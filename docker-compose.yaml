@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  web:
+    build: docker-containers
+    ports:
+      - "8080:5000"
+    volumes:
+      - .:/code
+      - logvolume01:/var/log
+    depends_on:
+      - redis
+  redis:
+    image: redis
+volumes:
+  logvolume01: { }
