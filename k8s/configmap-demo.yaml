@@ -1,0 +1,26 @@
+# k8s/configmap-demo.yaml
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: email-templates
+data:
+  # this known as "file-like" keys. In YAML, the "|" coming after the key allows to have multi-line values
+  confirmation.html: |
+    <html>
+      <head>
+        <title>Your Order Confirmation</title>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+      </head>
+      <style>
+        body{
+          font-family: 'DM Sans', sans-serif;
+        }
+      </style>
+      <body>
+        <h2>Your Order Confirmation</h2>
+        <p>Thanks for shopping with us!<p>
+        <h3>Order ID</h3>
+        <p>#{{ order.order_id }}</p>  
+      </body>
+    </html>

@@ -1,0 +1,15 @@
+# k8s/service-nodeport-demo.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-emailservice-external
+spec:
+  type: NodePort
+  selector:
+    app: emailservice
+  ports:
+    - protocol: TCP
+      nodePort: 30002
+      port: 8080
+      targetPort: 8080

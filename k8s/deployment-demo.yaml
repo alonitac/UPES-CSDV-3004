@@ -1,0 +1,22 @@
+# k8s/deployment-demo.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emailservice-deployment-test
+  labels:
+    app: emailservice
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: emailservice
+  template:
+    metadata:
+        labels:
+          app: emailservice
+          release: v0.7.0-stable
+    spec:
+      containers:
+      - name: server
+        image: gcr.io/google-samples/microservices-demo/emailservice:v0.7.0
