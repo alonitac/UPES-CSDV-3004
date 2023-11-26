@@ -1,0 +1,396 @@
+
+    
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>
+    Kubernetes - Core Objects - multichoice questions
+    </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" xmlns="http://www.w3.org/1999/html">
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=TextEncoder%2Ccrypto.subtle"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="github-markdown-css.css">
+        <style>
+            .markdown-body {
+                box-sizing: border-box;
+                min-width: 200px;
+                max-width: 980px;
+                margin: 0 auto;
+                padding: 45px;
+            }
+    
+            @media (max-width: 767px) {
+                .markdown-body {
+                    padding: 15px;
+                }
+            }
+            
+            .floating-button {
+              position: fixed;
+              bottom: 20px; /* Adjust the distance from the bottom as needed */
+              right: 20px; /* Adjust the distance from the right as needed */
+              z-index: 9999; /* Ensure the button appears above other elements */
+            }
+        </style>
+        <script>
+            const solutions = {'1': 'af2aef7071ca92fd7c9b80f9eb2263ffacf7d6dae5d0612e1ba4bbc04e04fc47', '2': '971e28bfa6d58f307ceb7acaa4a7720c1b96029fe5a86dbd962a85ed90f7e69d', '3': '4787e1998ea0068740a4d43cca83c84fa6233bbc66d12b8d442cda81e46e75ba', '4': '0c45b42d0b5f32c1afb63cbceb970f39b11da5ba85d02e1f19c74917f50f1542', '5': '9c978dcb04837772fa07f07e3c1a8ccb8aa4b7bb175a9e96b8f1ccb0c71f474a', '6': '7fd4c13c6dfe197ae7828052e254818e02b4aa54fea0f90dc559953c5b76a7ed', '7': '31eb3d2fc4ff2727d8f1017087cab6faa1fe6ef397acb649ad267afa6cbc1f03', '8': '25c7333f558be07eb1b247c5e469cc800a5beb7e6c4a529f7eacff459b3da4ee', '9': '1031fd130f899c43c4761c52de1e597b7f01fea3063cb3988592c9fcc5057bb7', '10': '7618f66753db7ec069c83ed8c197708e1402396774f60961065addd678933871', '11': 'a7ec0fe3d85b027032adeb2c97da4e9df3f8e702006c1491cb13358a1003a264', '12': '15f5e92756d7bd73bd92fb0596b848b616687e5a114718faadf44e84ad15f951', '13': 'f0a54be9ab778391c4a67e01c253b252e28646c9960cb00ba4da8e68c3b672b4', '14': '76e54a0cd2b7b4d9cc8a9add2a83be904cb4cf720b70ec4d03a7378dedad5a87'}
+        </script>
+    </head>
+    <body>
+    
+    <article class="markdown-body">  
+    
+    <h1>Kubernetes - Core Objects - multichoice questions</h1>
+<p>Given the below Pod YAML manifest:</p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-with-sidecar
+  labels:
+    app: nginx-with-sidecar
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.14
+      ports:
+        - containerPort: 80
+    - name: sidecar-container
+      image: busybox:latest
+      command: [&quot;/bin/sh&quot;, &quot;-c&quot;, &quot;while true; do echo 'Sidecar Container Running'; sleep 10; done&quot;]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx-with-sidecar
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+</code></pre>
+<p>Answer the below 5 questions</p>
+<h2>Question 1</h2>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> <code>nginx</code> and <code>sidecar-container</code> containers will run on different nodes. </li>
+<li><input type="checkbox"> <code>nginx</code> and <code>sidecar-container</code> containers will not run on different nodes. </li>
+<li><input type="checkbox"> <code>nginx</code> and <code>sidecar-container</code> containers may run on different nodes, depending on the scheduler. </li>
+<li><input type="checkbox"> The YAML is not a valid Pod manifest </li>
+</ul>
+<h2>Question 2</h2>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> <code>nginx</code> and <code>sidecar-container</code> don't share the same network interface, thus doesn't the same IP address. </li>
+<li><input type="checkbox"> <code>nginx</code> and <code>sidecar-container</code> share the same network interface, but doesn't have the same IP address. </li>
+<li><input type="checkbox"> <code>nginx</code> and <code>sidecar-container</code> share the same network interface, thus have the same IP address.</li>
+<li><input type="checkbox"> <code>nginx</code> and <code>sidecar-container</code> don't share the same network interface, but have the same IP address. </li>
+</ul>
+<h2>Question 3</h2>
+<p>Performing <code>curl http://nginx-service:80</code> from another pod in the cluster located in the <code>default</code> namespace:</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> The <code>nginx</code> container will receive the HTTP request. </li>
+<li><input type="checkbox"> The <code>sidecar-container</code> container will receive the HTTP request. </li>
+<li><input type="checkbox"> The HTTP request fails due to Connection Error.</li>
+<li><input type="checkbox"> None of the above </li>
+</ul>
+<h2>Question 4</h2>
+<p>Let's say, in addition to the above <code>nginx-with-sidecar</code> Pod, you apply the following <code>Deployment</code> manifest:</p>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-with-sidecar
+  template:
+    metadata:
+      labels:
+        app: nginx-with-sidecar
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+        - name: sidecar-container
+          image: busybox:latest
+          command: [&quot;/bin/sh&quot;, &quot;-c&quot;, &quot;while true; do echo 'Sidecar Container Running'; sleep 10; done&quot;]
+</code></pre>
+<p>How many replicas are currently running in the underlying ReplicaSet created by the Deployment?</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> 2</li>
+<li><input type="checkbox"> 3</li>
+<li><input type="checkbox"> 0</li>
+<li><input type="checkbox"> 4</li>
+</ul>
+<h2>Question 5</h2>
+<p>Choose the correct sentence:</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> Requests to <code>nginx-service</code> Service can be routed to <code>nginx-deployment</code>s Pods.</li>
+<li><input type="checkbox"> Requests to <code>nginx-service</code> Service cannot be routed to <code>nginx-deployment</code>s Pods.</li>
+<li><input type="checkbox"> Requests to <code>nginx-service</code> Service can be routed to <code>nginx-deployment</code>s Pods only if the two Pod's spec is identical.</li>
+<li><input type="checkbox"> This behavior is not defined well in Kubernetes. </li>
+</ul>
+<h2>Question 6</h2>
+<p>Given a Deployment called <code>worker</code> with 4 replicas. Assume the Deployment state is as described below:</p>
+<pre><code class="language-console">$ kubectl get pods
+NAME                                  READY   STATUS    RESTARTS      AGE     IP            NODE  
+worker-846c94dc48-v6gd5               1/1     Running      0          2d12h   10.244.0.31   node1
+worker-846c94dc48-k42tv               1/1     Running      0          1m      10.244.0.19   node2
+worker-846c94dc48-tnl2t               1/1     Pending      0          1m      10.244.0.24   node3
+worker-846c94dc48-cjkvn               1/1     Running      0          1m      10.244.0.25   node1
+</code></pre>
+<p>If the Deployment would scaled down to 2 replicas. Which Pods would be scaled down? </p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> <code>v6gd5</code> and <code>k42tv</code></li>
+<li><input type="checkbox"> <code>v6gd5</code> and <code>tnl2t</code></li>
+<li><input type="checkbox"> <code>v6gd5</code> and <code>cjkvn</code></li>
+<li><input type="checkbox"> <code>k42tv</code> and <code>tnl2t</code></li>
+<li><input type="checkbox"> <code>k42tv</code> and <code>cjkvn</code></li>
+<li><input type="checkbox"> <code>tnl2t</code> and <code>cjkvn</code></li>
+</ul>
+<p>Hint: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/#scaling-a-replicaset</p>
+<h2>Question 7</h2>
+<p>Consider the following Service: </p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  namespace: stage
+  name: my-service
+spec:
+  selector:
+    app: myapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+</code></pre>
+<p>Given the below Pod: </p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+</code></pre>
+<p>How does the <code>nginx</code> Pod access the <code>my-service</code> service? </p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> <code>http://my-service.stage:80</code></li>
+<li><input type="checkbox"> <code>http://my-service:80</code></li>
+<li><input type="checkbox"> <code>http://my-service:8080</code></li>
+<li><input type="checkbox"> <code>http://my-service.stage.svc.cluster.local:80</code></li>
+</ul>
+<p>Given the following Secret and Pod: </p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Secret
+metadata:
+  name: my-secret
+type: Opaque
+data:
+  password: cGFzc3dvcmQxMjM=
+  username: dXNlcgo=
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+  - name: mycontainer
+    image: busybox:latest
+    command: [&quot;sleep&quot;, &quot;3600&quot;]
+    volumeMounts:
+    - name: secret-volume
+      mountPath: &quot;/etc/my-secret&quot;
+  volumes:
+  - name: secret-volume
+    secret:
+      secretName: my-secret
+</code></pre>
+<p>Getting a Shell access to <code>mypod</code>, answer the below 3 questions: </p>
+<h2>Question 8</h2>
+<p>What would the following command print? </p>
+<pre><code class="language-bash">cat /etc/my-secret/password
+</code></pre>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> k8s_is_great!</li>
+<li><input type="checkbox"> No such file or directory error</li>
+<li><input type="checkbox"> password123</li>
+<li><input type="checkbox"> None of the above</li>
+</ul>
+<h2>Question 9</h2>
+<p>What is the file type of <code>/etc/my-secret/password</code>? </p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> Regular file (<code>-</code>).</li>
+<li><input type="checkbox"> Directory (<code>d</code>).</li>
+<li><input type="checkbox"> Link (<code>l</code>).</li>
+<li><input type="checkbox"> None of the above</li>
+</ul>
+<h2>Question 10</h2>
+<p>How many files are in <code>/etc/my-secret</code>?</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> 1</li>
+<li><input type="checkbox"> 2</li>
+<li><input type="checkbox"> 3</li>
+<li><input type="checkbox"> Unknown</li>
+</ul>
+<h2>Question 11</h2>
+<p>Given the below Service: </p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 80
+      nodePort: 30302
+  selector:
+    app: myapp
+</code></pre>
+<p>Let's say this Kubernetes cluster is provisioned in AWS with 50 EC2 instances. </p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> The service is accessible from any IP of the cluster's EC2s, on port 30302</li>
+<li><input type="checkbox"> The service is accessible from any IP of the cluster's EC2s IP, on port 8080</li>
+<li><input type="checkbox"> The service is accessible from only one IP of the cluster's EC2s, on port 30302</li>
+<li><input type="checkbox"> The service is accessible from only one IP of the cluster's EC2s, on port 8080</li>
+<li><input type="checkbox"> None of the above</li>
+</ul>
+<p>Below is an example YAML manifest for a Deployment:</p>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-deployment
+spec:
+  replicas: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp-container
+        image: nginx:1.25.2
+</code></pre>
+<p>The current version of the application is <code>nginx:1.25.2</code>. 
+You want to perform a rolling update to deploy a new version of the application, <code>nginx:1.25.3</code>. </p>
+<h2>Question 12</h2>
+<p>What is the maximum number of Pod might be observed during version update? </p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> 5</li>
+<li><input type="checkbox"> 2</li>
+<li><input type="checkbox"> 8</li>
+<li><input type="checkbox"> 7</li>
+</ul>
+<h2>Question 13</h2>
+<p>What is the minimum number of Pod might be observed during version update? </p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> 5</li>
+<li><input type="checkbox"> 4</li>
+<li><input type="checkbox"> 3</li>
+<li><input type="checkbox"> 0</li>
+</ul>
+<p>Below is an example YAML manifest for a Deployment:</p>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-deployment
+spec:
+  replicas: 5
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp-container
+        image: nginx:1.25.2
+</code></pre>
+<p>The current version of the application is <code>nginx:1.25.2</code>. 
+You want to perform an update to deploy a new version of the application, <code>nginx:1.25.3</code>. </p>
+<h2>Question 14</h2>
+<p>What is the minimum number of Pod might be observed during version update? </p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> 5</li>
+<li><input type="checkbox"> 4</li>
+<li><input type="checkbox"> 3</li>
+<li><input type="checkbox"> 0</li>
+</ul> 
+    
+        <script>
+    
+            function test(){
+                const studentSolution = {};
+    
+                $('ul').each(function (index) {
+                    if ($(this).find('input[type="checkbox"]').length > 0) {
+                      var ulElement = $(this);
+                      var qNum = ($('ul').index(ulElement) + 1) + '';
+
+                      var answerToken = '' + qNum;
+                      ulElement.find('li').each(function () {
+                        var isChecked = $(this).find('input').prop('checked');
+                        answerToken += isChecked ? '1' : '0';
+
+                      });
+
+                      var hashPromise  = crypto.subtle.digest('SHA-256', new TextEncoder().encode(answerToken))
+                        .then((hashBuffer) => {
+                          var hashArray = Array.from(new Uint8Array(hashBuffer));
+                          var hashHex = hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
+                          return hashHex;
+                        });
+    
+                      studentSolution[qNum] = hashPromise;
+    
+                    }
+                });
+    
+                Promise.allSettled(Object.values(studentSolution))
+                  .then(function (results) {
+                    results.forEach(function (result, i) {
+                       studentSolution[(i + 1) + ''] = result.value;
+                    });
+                }).then(function () {
+
+                    console.log(studentSolution)
+
+                    for (const i in studentSolution) {
+                      console.log('student solution' + studentSolution[i]);
+                      if (solutions[i] === studentSolution[i]) {
+                        $("h2:contains('Question " + i + "'):first").css('color', 'green');
+                      } else {
+                        $("h2:contains('Question " + i + "'):first").css('color', 'red');
+                      }
+                    }
+                });
+            }
+    
+        </script>
+    
+        <input type="button" class="floating-button" value="Test" onclick="test()">
+    
+    </article>
+    </body>
+    </html>
+    
+    

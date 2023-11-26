@@ -117,7 +117,6 @@ In the above output we can see a detailed description of the pod. Reviewing all 
 - Each Pod is assigned a unique IP address.
 - Pod **events** can help you debug your pod state. 
 
-
 ### Workload resources 
 
 Usually you don't need to create Pods directly. 
@@ -154,18 +153,18 @@ Here is an example of ReplicaSet:
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: emailservice-replicaset-test
+  name: emailservice-replicaset-demo
   labels:
-    app: emailservice
+    app: emailservice-demo
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: emailservice
+      app: emailservice-demo
   template:
     metadata:
         labels:
-          app: emailservice
+          app: emailservice-demo
     spec:
       containers:
       - name: server
@@ -177,7 +176,7 @@ In this example:
 - The `.spec.template` field contains a [PodTemplates](https://kubernetes.io/docs/concepts/workloads/pods/#pod-templates). PodTemplates are specifications for creating Pods. As you can see it's very similar to `Pod` YAML described in the previous section.
   We can also notice that pods created from this template hold a label with key `app` and value `emailservice`.
 - The ReplicaSet creates three replicated Pods, indicated by the `.spec.replicas` field.
-- The `.spec.selector.matchLabels` field defines how the created ReplicaSet finds which Pods to manage (remember that ReplicaSet is a controller that manage Pods). In this case, the ReplicaSet will manage all Pods that match the label `app: emailservice`, corresponding to the label we gave in the Pod template. 
+- The `.spec.selector.matchLabels` field defines how the created ReplicaSet finds which Pods to manage (remember that ReplicaSet is a controller that manage Pods). In this case, the ReplicaSet will manage all Pods that match the label `app: emailservice-demo`, corresponding to the label we gave in the Pod template. 
 
 Let's apply this ReplicaSet in the cluster.
 
@@ -194,7 +193,7 @@ kubectl get rs
 You can also check for the Pods brought up as part of the ReplicaSet:
 
 ```bash 
-kubectl get pods -l app=emailservice
+kubectl get pods -l app=emailservice-demo
 ```
 
 Let's play with your ReplicaSet:
@@ -207,7 +206,7 @@ Let's play with your ReplicaSet:
 Delete your ReplicaSet before moving on to the next section:
 
 ```bash
-kubectl delete replicaset emailservice-replicaset-test
+kubectl delete replicaset emailservice-replicaset-demo
 ```
 
 ### Deployment
@@ -226,39 +225,39 @@ The following is an example of a Deployment:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: emailservice-deployment-test
+  name: emailservice-deployment-demo
   labels:
-    app: emailservice
+    app: emailservice-demo
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: emailservice
+      app: emailservice-demo
   template:
     metadata:
         labels:
-          app: emailservice
+          app: emailservice-demo
     spec:
       containers:
       - name: server
         image: gcr.io/google-samples/microservices-demo/emailservice:v0.7.0
 ```
 
-To see the Deployment rollout status, run `kubectl rollout status deployment/emailservice-deployment-test`
+To see the Deployment rollout status, run `kubectl rollout status deployment/emailservice-deployment-demo`
 
 Under the hood, the Deployment object created a ReplicaSet (`rs`) for you:
 
 ```console
 $ kubectl get rs
 NAME                                      DESIRED   CURRENT   READY   AGE
-emailservice-deployment-test-75675f5897   3         3         3       18s
+emailservice-deployment-demo-75675f5897   3         3         3       18s
 ```
 
 #### Updating a Deployment 
 
 A Deployment's rollout is triggered if and only if the Deployment's Pod template (that is, `.spec.template`) is changed.
 
-Let's update the `emailservice-deployment-test` Pods to use the `emailservice:v0.8.0` image instead of the `emailservice:v0.7.0` image.
+Let's update the `emailservice-deployment-demo` Pods to use the `emailservice:v0.8.0` image instead of the `emailservice:v0.7.0` image.
 In the Deployment YAML manifest, edit the `.spec.template.spec.containers[0].image` value, and apply again.
 
 Run `kubectl get rs` to see that the Deployment updated the Pods by **creating a new ReplicaSet** and scaling it up to 3 replicas, as well as scaling down **the old ReplicaSet** to 0 replicas.
@@ -267,19 +266,19 @@ This actually means that the Deployment manipulate ReplicaSet objects for you.
 This process is known as `RollingUpdate`. 
 
 ```console
-$ kubectl describe deployments emailservice-deployment-test
-Name:                   emailservice-deployment-test
+$ kubectl describe deployments emailservice-deployment-demo
+Name:                   emailservice-deployment-demo
 Namespace:              default
 CreationTimestamp:      Thu, 28 Sep 2023 20:10:41 +0000
-Labels:                 app=emailservice
+Labels:                 app=emailservice-demo
 Annotations:            deployment.kubernetes.io/revision: 2
-Selector:               app=emailservice
+Selector:               app=emailservice-demo
 Replicas:               3 desired | 3 updated | 3 total | 3 available | 0 unavailable
 StrategyType:           RollingUpdate
 MinReadySeconds:        0
 RollingUpdateStrategy:  25% max unavailable, 25% max surge
 Pod Template:
-  Labels:  app=emailservice
+  Labels:  app=emailservice-demo
   Containers:
    server:
     Image:        gcr.io/google-samples/microservices-demo/emailservice:v0.8.0
@@ -293,18 +292,18 @@ Conditions:
   ----           ------  ------
   Available      True    MinimumReplicasAvailable
   Progressing    True    NewReplicaSetAvailable
-OldReplicaSets:  emailservice-deployment-test-976d85c7c (0/0 replicas created)
-NewReplicaSet:   emailservice-deployment-test-599c84db5d (3/3 replicas created)
+OldReplicaSets:  emailservice-deployment-demo-976d85c7c (0/0 replicas created)
+NewReplicaSet:   emailservice-deployment-demo-599c84db5d (3/3 replicas created)
 Events:
   Type    Reason             Age   From                   Message
   ----    ------             ----  ----                   -------
-  Normal  ScalingReplicaSet  76s   deployment-controller  Scaled up replica set emailservice-deployment-test-976d85c7c to 3
-  Normal  ScalingReplicaSet  30s   deployment-controller  Scaled up replica set emailservice-deployment-test-599c84db5d to 1
-  Normal  ScalingReplicaSet  28s   deployment-controller  Scaled down replica set emailservice-deployment-test-976d85c7c to 2 from 3
-  Normal  ScalingReplicaSet  28s   deployment-controller  Scaled up replica set emailservice-deployment-test-599c84db5d to 2 from 1
-  Normal  ScalingReplicaSet  26s   deployment-controller  Scaled down replica set emailservice-deployment-test-976d85c7c to 1 from 2
-  Normal  ScalingReplicaSet  25s   deployment-controller  Scaled up replica set emailservice-deployment-test-599c84db5d to 3 from 2
-  Normal  ScalingReplicaSet  23s   deployment-controller  Scaled down replica set emailservice-deployment-test-976d85c7c to 0 from 1
+  Normal  ScalingReplicaSet  76s   deployment-controller  Scaled up replica set emailservice-deployment-demo-976d85c7c to 3
+  Normal  ScalingReplicaSet  30s   deployment-controller  Scaled up replica set emailservice-deployment-demo-599c84db5d to 1
+  Normal  ScalingReplicaSet  28s   deployment-controller  Scaled down replica set emailservice-deployment-demo-976d85c7c to 2 from 3
+  Normal  ScalingReplicaSet  28s   deployment-controller  Scaled up replica set emailservice-deployment-demo-599c84db5d to 2 from 1
+  Normal  ScalingReplicaSet  26s   deployment-controller  Scaled down replica set emailservice-deployment-demo-976d85c7c to 1 from 2
+  Normal  ScalingReplicaSet  25s   deployment-controller  Scaled up replica set emailservice-deployment-demo-599c84db5d to 3 from 2
+  Normal  ScalingReplicaSet  23s   deployment-controller  Scaled down replica set emailservice-deployment-demo-976d85c7c to 0 from 1
 ```
 
 If you look at the above Deployment closely, you will see that it first creates a new Pod, then deletes an old Pod, and creates another new one.
@@ -317,13 +316,14 @@ By default, it ensures that at least 75% of the desired number of Pods are up (2
 Deployment also ensures that only a certain number of Pods are created above the desired number of Pods.
 By default, it ensures that at most 125% of the desired number of Pods are up (25% **max surge**).
 
-When you updated the Deployment, it created a new ReplicaSet (`emailservice-deployment-test-599c84db5d`) and scaled it up to 1 and waited for it to come up.
+When you updated the Deployment, it created a new ReplicaSet (`emailservice-deployment-demo-599c84db5d`) and scaled it up to 1 and waited for it to come up.
 Then it scaled down the old ReplicaSet to 2 and scaled up the new ReplicaSet to 2 so that at least 3 Pods were available and at most 4 Pods were created at all times.
 It then continued scaling up and down the new and the old ReplicaSet, with the same rolling update strategy.
 Finally, you'll have 3 available replicas in the new ReplicaSet, and the old ReplicaSet is scaled down to 0.
 
-**Note**: During a RollingUpdate, new versions of an application are gradually rolled out while old versions are gradually scaled down. This means that for a brief period, both the old and new versions of the application may be running concurrently in the cluster.
-this simultaneous running of multiple versions can potentially lead to compatibility issues. For example, if the new version of the application introduces changes to the data schema or format that are incompatible with the old version, it can lead to issues when both versions are accessing the same data store concurrently.
+> [!IMPORTANT]
+> During a RollingUpdate, new versions of an application are gradually rolled out while old versions are gradually scaled down. This means that for a brief period, both the old and new versions of the application may be running concurrently in the cluster.
+> this simultaneous running of multiple versions can potentially lead to compatibility issues. For example, if the new version of the application introduces changes to the data schema or format that are incompatible with the old version, it can lead to issues when both versions are accessing the same data store concurrently.
 
 
 #### Failed Deployment
@@ -357,7 +357,7 @@ Each Service object defines a logical set of **Endpoints** (usually these endpoi
 
 The set of Pods targeted by a Service is usually determined by a `selector` that you define.
 
-Here is an example for Service exposing port `8080` for all Pods in the cluster labelled by the `app: emailservice` key and value (this was the Pod label in the `emailservice-deployment-test` Deployment):
+Here is an example for Service exposing port `8080` for all Pods in the cluster labelled by the `app: emailservice-demo` key and value (this was the Pod label in the `emailservice-deployment-demo` Deployment):
 
 ```yaml
 # k8s/service-demo.yaml
@@ -368,7 +368,7 @@ metadata:
   name: my-emailservice
 spec:
   selector:
-    app: emailservice
+    app: emailservice-demo
   ports:
     - protocol: TCP
       port: 8080
@@ -386,7 +386,7 @@ Name:              my-emailservice
 Namespace:         default
 Labels:            <none>
 Annotations:       <none>
-Selector:          app=emailservice
+Selector:          app=emailservice-demo
 Type:              ClusterIP
 IP Family Policy:  SingleStack
 IP Families:       IPv4
@@ -441,7 +441,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app: emailservice
+    app: emailservice-demo
   ports:
     - protocol: TCP
       nodePort: 30002
@@ -521,18 +521,18 @@ The below example provides the secret data as environment variables to the runni
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: emailservice-deployment-test
+  name: emailservice-deployment-demo
   labels:
-    app: emailservice
+    app: emailservice-demo
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: emailservice
+      app: emailservice-demo
   template:
     metadata:
         labels:
-          app: emailservice
+          app: emailservice-demo
           release: v0.7.0-stable
     spec:
       containers:
@@ -556,7 +556,7 @@ spec:
 In your shell, display the content of `EMAIL_SERVER_ADMIN_USER` and `EMAIL_SERVER_ADMIN_PASSWORD` container environment variable:
 
 ```console
-$ kubectl get pods -l app=emailservice
+$ kubectl get pods -l app=emailservice-demo
 NAME                            READY   STATUS    RESTARTS      AGE
 emailservice-55df5dcf48-6xbgx   1/1     Running   1 (91m ago)   19h
 
@@ -573,18 +573,18 @@ Secrets can also be mounted as file in the Pod's container file system:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: emailservice-deployment-test
+  name: emailservice-deployment-demo
   labels:
-    app: emailservice
+    app: emailservice-demo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: emailservice
+      app: emailservice-demo
   template:
     metadata:
         labels:
-          app: emailservice
+          app: emailservice-demo
           release: v0.7.0-stable
     spec:
       containers:
@@ -604,27 +604,27 @@ spec:
 The secret data is exposed to the Container through a Volume mounted under `/etc/secret-volume`.
 
 ```console
-$ kubectl get pods -l app=emailservice
+$ kubectl get pods -l app=emailservice-demo
 NAME                                            READY   STATUS    RESTARTS      AGE
-emailservice-deployment-test-7484ddf954-pdbzz   1/1     Running   0              65s
+emailservice-deployment-demo-7484ddf954-pdbzz   1/1     Running   0              65s
 ```
 
 Get a shell access to a running Pod's, in a similar way done for Docker containers:
 
 ```bash
-kubectl exec -it emailservice-deployment-test-7484ddf954-pdbzz -- /bin/bash
+kubectl exec -it emailservice-deployment-demo-7484ddf954-pdbzz -- /bin/bash
 ```
 
 In the Pod's shell:
 
 ```console
-root@emailservice-deployment-test-7484ddf954-pdbzz:/email_server# ls /etc/secret-volume
+root@emailservice-deployment-demo-7484ddf954-pdbzz:/email_server# ls /etc/secret-volume
 password  username
 
-root@emailservice-deployment-test-7484ddf954-pdbzz:/email_server# cat /etc/secret-volume/username
+root@emailservice-deployment-demo-7484ddf954-pdbzz:/email_server# cat /etc/secret-volume/username
 online-boutique-emailer
 
-root@emailservice-deployment-test-7484ddf954-pdbzz:/email_server# cat /etc/secret-volume/password
+root@emailservice-deployment-demo-7484ddf954-pdbzz:/email_server# cat /etc/secret-volume/password
 39528$vdg7Jb
 ```
 
@@ -681,23 +681,23 @@ As can be seen, ConfigMaps are similar to Secrets but are specifically intended 
 After applying the ConfigMap, let's update our Deployment accordingly:
 
 ```yaml 
-# k8s/deployment-demo-secret-mount.yaml
+# k8s/deployment-demo-configmap-mount.yaml
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: emailservice-deployment-test
+  name: emailservice-deployment-demo
   labels:
-    app: emailservice
+    app: emailservice-demo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: emailservice
+      app: emailservice-demo
   template:
     metadata:
         labels:
-          app: emailservice
+          app: emailservice-demo
           release: v0.7.0-stable
     spec:
       containers:
@@ -725,4 +725,187 @@ Similarly to Secrets, ConfigMap can also be consumed as environment variables.
 ## Kubernetes core objects summary
 
 ![](../.img/k8s-deployment.png)
+
+# Self-check questions
+
+[Enter the interactive self-check page](https://alonitac.github.io/UPES-CSDV-3004/multichoice-questions/k8s_core_objects.html)
+
+
+# Exercises 
+
+### :pencil2: Deploy the 2048 game
+
+Create a **Deployment** for the [2048 game dockerized image](https://hub.docker.com/r/alexwhen/docker-2048).
+Expose the Deployment with a **Service** listening on port `5858`. Visit the app locally using `kubectl port-forward` command.
+
+### :pencil2: Deploy a simple nodejs webserver and test load balancing 
+
+Build the `simple_nodejs_webserver` image and deploy it as a Deployment of 2 replicas using your own image, stored on ECR or Dockerhub ([registry-creds](https://minikube.sigs.k8s.io/docs/tutorials/configuring_creds_for_aws_ecr/) addon should be enabled in your Minikube). 
+
+### :pencil2: Create a Job
+
+The [Job workload](https://kubernetes.io/docs/concepts/workloads/controllers/job/) is a way to reliably run "jobs" is the cluster, i.e. to run a Pod(s) **until a successful completion**. 
+The Job object will continue to retry execution of the Pods until pods successfully complete (it will start a new Pod if the Pod fails or deleted). 
+
+When a Job completes, the Pods are usually not deleted.
+Keeping them around allows you to view the logs of completed pods to check for errors, warnings, or other diagnostic output.
+The job object also remains after it is completed so that you can view its status. 
+
+Create a Job that performs a simple load test to make sure that the traffic is distributed among the 2 replicas of the `simple_nodejs_webserver`.
+
+1. Use [this](https://kubernetes.io/docs/concepts/workloads/controllers/job/#running-an-example-job) manifest example to create the Job. 
+  - The `image` should be `busybox:1.28`.
+  - The `command` can be `/bin/sh -c "for run in {1..10}; do wget -q -O- http://<service-name>:5858; done"`, while `<service-name>` is your service name.
+2. Apply the Job.
+3. Check the containers log of both replicas (using `kubectl logs` command), make sure there is an incoming requests traffic. 
+
+### :pencil2: Grafana and Redis dashboard
+
+In this exercise you deploy a [Grafana](https://grafana.com/) server with [Redis integration](https://grafana.com/grafana/plugins/redis-datasource/) that present information about the `redis-cart` DB provisioned in the cluster as part of the Online Boutique Service. 
+
+1. Create a grafana Deployment based on [`grafana/grafana`](https://hub.docker.com/r/grafana/grafana) docker image, as follows:
+  - The Deployment should set the following environment variables:
+    - `GF_AUTH_BASIC_ENABLED` with a value equals to `true`.
+    - `GF_SECURITY_ADMIN_USER` and `GF_SECURITY_ADMIN_PASSWORD` variables **to be read from dedicated Secret object** that you'll create with corresponding username and password (to your choice).
+    - `GF_INSTALL_PLUGINS` with the value `redis-datasource`. This variable pass the plugins you want to install when the container is being launched.
+2. Visit the server (you can forward it using the `kubectl port-forward` command).
+3. Configure the Redis datasource [as described here](https://grafana.com/grafana/plugins/redis-datasource/?tab=overview). The data source should read data from the existed `redis-cart` provisioned in your cluster. 
+4. In the **Redis** data source page, click on the **Dashboards** tab, and import the `Redis` dashboard. Take a look on the imported dashboard.   
+4. **(Bonus)** Instead of configuring the Redis datasource manually, configure it "as code" using a ConfigMap:
+    - Create a ConfigMap as follows:
+      ```yaml
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: grafana-datasources
+      data:
+        datasources.yaml: |-
+          {
+              "apiVersion": 1,
+              "datasources": [
+                {
+                  "version":2
+                  "name":"Redis",
+                  "type":"redis-datasource",
+                  "url":"redis-cart:6379",
+                  "isDefault":true
+                }
+              ]
+          }
+      ```
+    - Mount the configmap into `/etc/grafana/provisioning/datasources` directory within the container. The Grafana server read all `.yaml` files in this dir and applies the data sources configurations. 
+    - Make sure the datasource is configured on a clean Grafana deployment. 
+
+### :pencil2: Docker Compose migrated to K8S 
+
+Under `k8s/nginx_flask_mongodb` you'll find a Docker Compose project.
+
+![](../.img/k8s_nginx-flask-mongo.png)
+
+Migrate the `nginx`, `flask-app` and `mongo` services to your k8s cluster.
+Use Deployment, Service and ConfigMap objects. 
+
+Make sure the app is working by:
+
+```bash
+kubectl port-forward <nginx-service-or-pod> 8080:80
+```
+
+Then visit the app in `http://localhost:8080`. 
+
+### :pencil2: CronJobs 
+
+A [CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/) creates Jobs on a repeating schedule.
+
+Create a simple availability test CronJob that runs every 1 minute and monitors the availability of some of the services in the cluster. 
+
+Guidelines:
+
+- Based on the [CronJob example](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#example)
+- Use the `busybox` as the underlying Docker image, with a command `/bin/sh -c "wget --spider --timeout=5 --tries=3 http://<monitored-service-url>"`. Change `<monitored-service-url>` to the service under test.
+
+### :pencil2: Breaking changes during rolling update
+
+In this exercise, you will deploy a straightforward Node.js server (`v1`) as a Deployment.
+The server exposes a default endpoint (`/`) that performs authentication checks using a cookie named `authTokenV1`.
+Then you will perform a rolling update of new version of the server (`v2`), utilizing the `authTokenV2` cookie for authentication. 
+In order to allow a smooth transition for users who have previously logged in and possess `authTokenV1` cookies, the `v2` server first tries to read the `authTokenV1` cookie, and if found, removes it and set fresh `authTokenV2` cookie. 
+That way, users who authenticated in `v1` would not experience session invalidation after the update. 
+
+Let's recall that during a rolling update, for a brief period, both `v1` and `v2` versions of the server may be running concurrently in the cluster.
+In that case, if a user makes a request to `v1`, followed by a request to `v2`, and then returns to `v1`, the login session will be invalidated due to the server's transition from `authTokenV1` to `authTokenV2`, necessitating users to re-authenticate.
+
+1. Take a look on the code under `k8s/breaking_rollingupdate/v1` and `k8s/breaking_rollingupdate/v2`.
+2. Demonstrate the breaking change locally:
+
+Install Node.js if needed:
+
+```bash
+sudo apt update && sudo apt install nodejs npm
+```
+
+Install server dependencies:
+
+```bash
+cd k8s/breaking_rollingupdate/v1
+npm install
+```
+
+Run server `v1`:
+
+```bash
+npm start
+```
+
+Visit the server multiple times using a web browser, the first request should set a cookie which represents an authentications. 
+You should be recognized as an authenticated user in the other requests.
+
+Stop server `v1`, run server `v2`. Refresh your web browser, observe how the server smoothly delete `authTokenV1` and set `authTokenV2` under the hood. 
+Now stop `v2` and run `v1` again, observe how the server doesn't recognize you as an authenticated user. 
+
+3. Think how to fix the code of `v1` to deal with the breaking change (try it even if you are not familiar with nodejs, the fix should be a simple `if` statement).
+4. Build the `v1` server with your fix, apply it in the cluster as a Deployment.  
+5. Build and apply `v2`. 
+6. Since it's hard to simulate a requests to both versions during the short time k8s performs the rolling update, rollback to `v1`, visit the server and make sure that you are authenticated. 
+
+### :pencil2: Service without selector
+
+Read the **Services without selectors** section in the official k8s docs about Services. 
+
+https://kubernetes.io/docs/concepts/services-networking/service/#services-without-selectors
+
+Create a Service object which routes traffic to an EC2 instance which is not part of your cluster's machines (but is part of the VPC).
+
+### :pencil2: Expose k8s dashboard NodePort 
+
+Create a Service of type `NodePort`, so you can visit the Kubernetes Dashboard (located in `kubernetes-dashboard` namespace) using the one of the cluster's Node public IP address.
+Make sure the NodePort port number is allows in the instance's security group. 
+
+
+### :pencil2: Rollback a bad Deployment 
+
+Sometimes, you may want to rollback a Deployment, for example, when the Deployment is not stable, such as crash looping.
+By default, all of the Deployment's rollout history is kept in the system so that you can rollback anytime you want. 
+
+Let's apply a bad Deployment by putting a typo in the image name.
+
+The rollout gets stuck. You can verify it by checking the rollout status:
+
+```bash
+kubectl rollout status deployment/<deployment-name>
+```
+
+You can rollout to the previous version by:
+
+```bash
+kubectl rollout undo deployment/<deployment-name>
+```
+
+Or, to check the revisions of this Deployment:
+
+```bash
+kubectl rollout history deployment/nginx-deployment
+```
+
+And rollback to a specific revision by specifying it with `--to-revision`.
 
