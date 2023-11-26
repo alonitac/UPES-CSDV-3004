@@ -1,0 +1,14 @@
+# k8s/pod-demo.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: emailservice-pod-test
+  labels:
+    project: online-boutique
+    env: prod
+    release: v0.7.0-stable
+spec:
+  containers:
+  - name: server
+    image: gcr.io/google-samples/microservices-demo/emailservice:v0.7.0
