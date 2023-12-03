@@ -1,0 +1,173 @@
+
+    
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>
+    Kubernetes - Helm - multichoice questions
+    </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" xmlns="http://www.w3.org/1999/html">
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=TextEncoder%2Ccrypto.subtle"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="github-markdown-css.css">
+        <style>
+            .markdown-body {
+                box-sizing: border-box;
+                min-width: 200px;
+                max-width: 980px;
+                margin: 0 auto;
+                padding: 45px;
+            }
+    
+            @media (max-width: 767px) {
+                .markdown-body {
+                    padding: 15px;
+                }
+            }
+            
+            .floating-button {
+              position: fixed;
+              bottom: 20px; /* Adjust the distance from the bottom as needed */
+              right: 20px; /* Adjust the distance from the right as needed */
+              z-index: 9999; /* Ensure the button appears above other elements */
+            }
+        </style>
+        <script>
+            const solutions = {'1': 'af2aef7071ca92fd7c9b80f9eb2263ffacf7d6dae5d0612e1ba4bbc04e04fc47', '2': '0c5a34dcbbf1c6db658c12162bb23612446680ac217921bd85fe2b6ea31f9c95', '3': '7b877f650cb4fcb34cc421916b5138c382484e6ae5f9dcdb38817c87edd5f727', '4': 'b993c8014a9a736ee31cb4d3369778bed3c20b1e72bb27e5ebe4f9b68afd418b', '5': '50c7649876825c7621086256b81f35b85ae19a888d55b0aca6189f30458925d6'}
+        </script>
+    </head>
+    <body>
+    
+    <article class="markdown-body">  
+    
+    <h1>Kubernetes - Helm - multichoice questions</h1>
+<p>Answer the below questions for <a href="https://artifacthub.io/packages/helm/hashicorp/vault/0.26.1">Vault Helm Chart version 0.26.1</a>.</p>
+<h2>Question 1</h2>
+<p>What is the default tag used for the <code>server.image.repository</code> value? </p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> <code>1.3.1</code></li>
+<li><input type="checkbox"> <code>1.15.1</code></li>
+<li><input type="checkbox"> <code>1.4.1</code></li>
+<li><input type="checkbox"> None of the above</li>
+</ul>
+<h2>Question 2</h2>
+<p>Applying the Chart with the default values will create an Ingress for the <code>server</code>? </p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> No.</li>
+<li><input type="checkbox"> Yes.</li>
+<li><input type="checkbox"> Ingress os not part of the Chart.</li>
+<li><input type="checkbox"> Depends on the Ingress Controller type. </li>
+</ul>
+<h2>Question 3</h2>
+<p>How does a <code>values.yaml</code> file may look like with an override for the <code>injector</code> port to be <code>8081</code>?</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> <code>yaml 
+      injector.port: 8081</code></li>
+<li><input type="checkbox"> <code>yaml 
+      port: 8081</code></li>
+<li><input type="checkbox"> <code>yaml 
+      injector:
+        port: 8081</code></li>
+<li><input type="checkbox"> There is no need to override since the default port is <code>8081</code></li>
+</ul>
+<h2>Question 4</h2>
+<p>The Chart creates a PVC for data for the Vault StatefulSet. 
+What would be the StorageClass type of the created Volume?</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> <code>hostPath</code>.</li>
+<li><input type="checkbox"> <code>gp2</code>.</li>
+<li><input type="checkbox"> <code>azurefile</code>.</li>
+<li><input type="checkbox"> The StorageClass type can not be specified from the Chart values.</li>
+</ul>
+<h2>Question 5</h2>
+<p>Consider the below 3 values YAML files: </p>
+<pre><code class="language-yaml"># values-general.yaml
+
+server:
+  image:
+    tag: &quot;1.16.0&quot;
+  terminationGracePeriodSeconds: 15
+</code></pre>
+<pre><code class="language-yaml"># values-production.yaml
+
+server:
+  livenessProbe:
+    enabled: true
+  terminationGracePeriodSeconds: 20
+</code></pre>
+<pre><code class="language-yaml"># values-canary.yaml
+
+server:
+  route:
+    enabled: false
+  terminationGracePeriodSeconds: 60
+</code></pre>
+<p>Given the below <code>helm upgrade</code> command: </p>
+<pre><code class="language-bash">helm upgrade values hashicorp/vault -f values-general.yaml -f values-production.yaml -f values-canary.yaml
+</code></pre>
+<p>What is the final value for the <code>terminationGracePeriodSeconds</code> configuration in the Helm chart?</p>
+<ul style="list-style-type: none;">
+<li><input type="checkbox"> 15</li>
+<li><input type="checkbox"> 20</li>
+<li><input type="checkbox"> 60</li>
+<li><input type="checkbox"> It will result in an error/conflict.</li>
+</ul> 
+    
+        <script>
+    
+            function test(){
+                const studentSolution = {};
+    
+                $('ul').each(function (index) {
+                    if ($(this).find('input[type="checkbox"]').length > 0) {
+                      var ulElement = $(this);
+                      var qNum = ($('ul').index(ulElement) + 1) + '';
+
+                      var answerToken = '' + qNum;
+                      ulElement.find('li').each(function () {
+                        var isChecked = $(this).find('input').prop('checked');
+                        answerToken += isChecked ? '1' : '0';
+
+                      });
+
+                      var hashPromise  = crypto.subtle.digest('SHA-256', new TextEncoder().encode(answerToken))
+                        .then((hashBuffer) => {
+                          var hashArray = Array.from(new Uint8Array(hashBuffer));
+                          var hashHex = hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
+                          return hashHex;
+                        });
+    
+                      studentSolution[qNum] = hashPromise;
+    
+                    }
+                });
+    
+                Promise.allSettled(Object.values(studentSolution))
+                  .then(function (results) {
+                    results.forEach(function (result, i) {
+                       studentSolution[(i + 1) + ''] = result.value;
+                    });
+                }).then(function () {
+
+                    console.log(studentSolution)
+
+                    for (const i in studentSolution) {
+                      console.log('student solution' + studentSolution[i]);
+                      if (solutions[i] === studentSolution[i]) {
+                        $("h2:contains('Question " + i + "'):first").css('color', 'green');
+                      } else {
+                        $("h2:contains('Question " + i + "'):first").css('color', 'red');
+                      }
+                    }
+                });
+            }
+    
+        </script>
+    
+        <input type="button" class="floating-button" value="Test" onclick="test()">
+    
+    </article>
+    </body>
+    </html>
+    
+    
