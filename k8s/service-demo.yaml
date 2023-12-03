@@ -6,7 +6,7 @@ metadata:
   name: my-emailservice
 spec:
   selector:
-    app: emailservice
+    app: emailservice-demo
   ports:
     - protocol: TCP
       port: 8080
