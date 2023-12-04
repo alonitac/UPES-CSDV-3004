@@ -58,7 +58,7 @@ The `grafana-charts` Helm Repository contains many different Charts maintained b
 Deploy the `grafana` Chart by: 
 
 ```bash
-helm install grafana grafana-repo/grafana 
+helm install grafana grafana-charts/grafana 
 ```
 
 The command syntax is as follows: `helm install <release-name> <helm-repo-name>/<chart-name>`.
