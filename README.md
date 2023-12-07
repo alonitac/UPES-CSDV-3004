@@ -24,4 +24,4 @@
 | ~~27\11~~ | 	~~10:00-11:00~~   | Cancelled                                                                                                                                                       | 
 | 1\12      | 	10:00-11:00       | [K8S core objects](tutorials/k8s_core_objects.md)                                                                                                               |
 | 4\12      | 	10:00-11:00       | [HELM](tutorials/k8s_helm.md)                                                                                                                                   |
-| 8\12      | 	10:00-11:00       | EKS, Ingress                                                                                                                                                    | 
+| 8\12      | 	10:00-11:00       | [EKS](tutorials/k8s_eks.md), [Ingress](tutorials/k8s_networking.md)                                                                                         | 
