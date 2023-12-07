@@ -42,7 +42,7 @@ Managed node groups are a blend of automation and customization for managing a c
 AWS takes care of tasks like patching, updating, and scaling nodes, easing operational aspects.
 
 
-<img src="../.img/eks_ng.png" width="80%" />
+<img src="../.img/eks_ng.png" width="60%" />
 
 Amazon EKS provides specialized AMIs that are called [Amazon EKS optimized AMIs](https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html).
 The AMIs are configured to work with Amazon EKS.
