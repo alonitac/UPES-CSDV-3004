@@ -55,7 +55,7 @@ There are [many Ingress Controller implementations](https://kubernetes.io/docs/c
 [Nginx ingress controller](https://github.com/kubernetes/ingress-nginx) is one of the popular used one. 
 Essentially, it's the same old good Nginx webserver app, exposed to be available outside the cluster (using Service of type `LoadBalancer`), and configured to route incoming traffic to different Services in the cluster (a.k.a. reverse proxy). 
 
-![](../.img/k8s_nginx-ic.png)
+![](../.img/k8s-nginx-ic.png)
 
 **Ingress** is another Kubernetes object, that defines the **routing rules** for the Ingress Controller.
 
